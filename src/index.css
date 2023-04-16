@@ -1,8 +1,28 @@
+@font-face {
+  font-family: 'BCSans';
+  font-style: normal;
+  src: url('../public/fonts/BCSans-Regular.woff') format('woff');
+}
+@font-face {
+  font-family: 'BCSans';
+  font-style: italic;
+  src: url('../public/fonts/BCSans-Italic.woff') format('woff');
+}
+@font-face {
+  font-family: 'BCSans';
+  font-weight: 700;
+  src: url('../public/fonts/BCSans-Bold.woff') format('woff');
+}
+@font-face {
+  font-family: 'BCSans';
+  font-style: italic;
+  font-weight: 700;
+  src: url('../public/fonts/BCSans-BoldItalic.woff') format('woff');
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'BCSans', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
