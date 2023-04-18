@@ -1,0 +1,52 @@
+header {
+  background-color: #036;
+  border-bottom: 2px solid #fcba19;
+  padding: 0 65px 0 65px;
+  color: #fff;
+  display: flex;
+  height: 65px;
+  top: 0px;
+  position: fixed;
+  width: 100%;
+}
+
+header .banner {
+  display: flex;
+  align-items: center;
+}
+
+header .logo {
+  width: 45px;
+  height: auto;
+  padding: 2px 2px 2px 2px;
+}
+
+header .sitename {
+  display: flex;
+  flex-direction: column;
+}
+
+header .sitename > *{
+  margin: 0px 0px 0px 0px;
+}
+
+header .sitename h3 {
+  font-family: 'BCSans', sans-serif;
+  font-weight: normal;  /* 400 */
+  padding: 0px 50px 0px 5px;
+}
+
+header .other {
+  display: flex;
+  flex-grow: 1;
+}
+
+header:after {
+  content: '';
+  position: absolute;
+  bottom: -7px;
+  left: 0px;
+  width: 100%;
+  height: 5px;
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0));
+}

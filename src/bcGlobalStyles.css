@@ -1,0 +1,9 @@
+form {
+  font-family: 'BCSans', sans-serif;
+  font-size: 18px;
+}
+
+:focus {
+  outline: 4px solid #3B99FC;
+  outline-offset: 1px;
+}
