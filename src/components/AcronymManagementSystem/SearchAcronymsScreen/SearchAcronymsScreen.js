@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react';
 // Landing screen.
 // User can search for acronyms.
 // User can navigate to the acronym search screen.
-function SearchAcronymsScreen({setScreen, fakeDb}) {
+function SearchAcronymsScreen({setScreen, fakeDb, setFakeDb}) {
   const [query, setQuery] = useState('');
   const [response, setResponse] = useState({});
 
@@ -21,19 +21,32 @@ function SearchAcronymsScreen({setScreen, fakeDb}) {
     setQuery('')
   }
 
-  function searchRecords(acronym) {
+  function searchRecords(acronym, db) {
     if (acronym === '') {
-      return fakeDb
-    } else if (fakeDb.hasOwnProperty(acronym)) {
-      return { [acronym]: fakeDb[acronym]}
+      return db
+    } else if (db.hasOwnProperty(acronym)) {
+      return { [acronym]: db[acronym]}
     } else {
       return {}
     }
   }
 
   function handleSearch () {
-    setResponse(searchRecords(query))
+    setResponse(searchRecords(query, fakeDb))
     resetInput()
+  };
+
+  function deleteRecord(acronym) {
+    const updated = Object.fromEntries(
+      Object.entries(fakeDb).filter(([key]) => key != acronym)
+    );
+    setFakeDb(updated);
+    return updated;
+  };
+
+  function handleDelete(acronym) {
+    const updated = deleteRecord(acronym);
+    setResponse(searchRecords(query, updated));
   };
 
   // Perform a fresh search whenever user returns to this screen.
@@ -53,7 +66,7 @@ function SearchAcronymsScreen({setScreen, fakeDb}) {
           </HorizontalContainer>
         </VerticalContainer>
       </GreyContainer>
-      <AcronymTable textWhenEmpty='Not Found' keyValuePairs={response}/>
+      <AcronymTable textWhenEmpty='Not Found' tableData={response} deleter={handleDelete}/>
     </VerticalContainer>
   )
 }

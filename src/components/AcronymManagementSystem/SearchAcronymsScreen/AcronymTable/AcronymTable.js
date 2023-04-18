@@ -1,16 +1,37 @@
 import './AcronymTable.css';
-import KeyValuePairTable from '../../../common/KeyValuePairTable/KeyValuePairTable.js'
+import SecondaryButton from '../../../common/SecondaryButton/SecondaryButton.js';
 import { VerticalContainer, WideContainer } from '../../../common/containers';
 
 // A dynamic table component listing acronyms and their definitions.
-function AcronymTable({keyValuePairs}) {
-  function renderTable()
-  {
-    let kvps = Object.entries(keyValuePairs)
+// User can delete acronyms by clicking the "delete" button on the row.
+function AcronymTable({tableData, deleter}) {
+  function renderTable() {
+    let kvps = Object.entries(tableData)
     if (kvps.length === 0) {
       return (<div><br/>Not Found</div>)
     } else {
-      return <KeyValuePairTable col1Name='Acronym' col2Name='Definition' data={kvps}/>
+      return (
+        <table>
+          <thead>
+            <tr>
+              <th scope='col'>Acronym</th>
+              <th scope='col'>Definition</th>
+              <th scope='col' className='delete-button-column'></th>
+            </tr>
+          </thead>
+          <tbody>
+            {kvps.map(([key, value]) => (
+              <tr key={key}>
+                <td>{key}</td>
+                <td>{value}</td>
+                <td>
+                  <SecondaryButton text='Delete' onClick={() => deleter(key)}/>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      );
     }
   };
 

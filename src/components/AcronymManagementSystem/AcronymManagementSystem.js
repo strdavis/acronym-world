@@ -16,6 +16,7 @@ function AcronymManagementSystem() {
         return <SearchAcronymsScreen
           setScreen={setScreen}
           fakeDb={fakeDb}
+          setFakeDb={setFakeDb}
         />
       case 'insertAcronyms':
         return <InsertAcronymsScreen

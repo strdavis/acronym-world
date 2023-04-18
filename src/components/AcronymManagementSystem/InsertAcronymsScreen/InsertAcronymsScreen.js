@@ -34,7 +34,7 @@ function InsertAcronymsScreen({setScreen, setFakeDb}) {
   return (
     <GreyContainer>
       <VerticalContainer>
-        <br/><h1>New Acronym</h1><br/>
+      <br/><h1>New Acronym</h1><br/>
         <TextInput placeholder='Enter acronym. . .' onChange={(value) => setAcronym(value)}/>
         <TextArea placeholder='Enter definition. . .' onChange={(value) => setDefinition(value)}/>
         <HorizontalContainer>
