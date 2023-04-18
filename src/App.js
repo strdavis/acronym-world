@@ -1,32 +1,74 @@
 import './App.css';
 import { useEffect, useState } from 'react';
 
-// A text box accepting input.
-function TextInput({placeholder, value, onChange}) {
+// A text box accepting single-line input.
+function TextInput({label, placeholder, value, onChange}) {
   return (
-    <input
-      type='text'
-      autoComplete='new-random-value'
-      value={value}
-      placeholder={placeholder}
-      onChange={(event) => onChange(event.target.value)} 
-    />
+    <form>
+      <div className='text_label'>
+        <label>{label}</label>
+      </div>
+      <input
+        className='text_input'
+        type='text'
+        name='labelname'
+        autoComplete='new-random-value'
+        value={value}
+        placeholder={placeholder}
+        onChange={(event) => onChange(event.target.value)} 
+      />
+    </form>
   );
 }
 
-// A dynamic component listing key-value pairs.
-function KeyValueList({textWhenEmpty, keyValuePairs}) {
+// A text box accepting multi-line input.
+function TextArea({label, placeholder, value, onChange}) {
+  return (
+    <form>
+      <div className='text_label'>
+        <label>{label}</label>
+      </div>
+      <textarea
+        className='text_area'
+        name='name'
+        rows='8'
+        cols='60'
+        autoComplete='new-random-value'
+        value={value}
+        placeholder={placeholder}
+        onChange={(event) => onChange(event.target.value)} 
+      />
+    </form>
+  );
+}
+
+// A dynamic table component listing acronyms and their definitions.
+function AcronymTable({keyValuePairs}) {
   let kvps = Object.entries(keyValuePairs)
   if (kvps.length === 0) {
-    return (<div>{textWhenEmpty}</div>)
+    return (<div><br/>Not Found</div>)
   } else {
     return (
-      <div>
-        {kvps.map(([key, value]) => (
-          <div key={key}>
-            {key}&emsp;{value}
-          </div>
-        ))}
+      <div className='wide-container' style={{margin: '20px 0px 20px 0px'}}>
+        <div className='vertical-container'>
+          <h2 style={{fontWeight: 'normal', textAlign: 'left', width: '100%', marginBottom: '30px', borderBottom: '1px solid #ccc'}}>Acronyms</h2>
+          <table>
+            <thead>
+              <tr>
+                <th scope='col'>Acronym</th>
+                <th scope='col'>Definition</th>
+              </tr>
+            </thead>
+            <tbody>
+              {kvps.map(([key, value]) => (
+                <tr key={key}>
+                  <td>{key}</td>
+                  <td>{value}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     )
   }
@@ -47,30 +89,33 @@ function SearchAcronyms({setScreen, searchRecords}) {
     setQuery('')
   }
 
-  function handleSearch() {
+  function handleSearch () {
     setResponse(searchRecords(query))
     resetInput()
-  }
+  };
 
   // Perform a fresh search whenever user returns to this screen.
   useEffect(() => {
-    handleSearch()
+    handleSearch();
   }, []);
 
   return (
     <div className='vertical-container'>
-      <h1>Welcome!</h1>
-      <TextInput
-        placeholder='Enter acronyms. . .'
-        value={query}
-        onChange={(value) => setQuery(value)} 
-      />
-      <div className='horizontal-container'>
-        <button onClick={handleSearch}>Search</button>
-        <button onClick={goToInsertAcronyms}>New Acronym</button>
+      <div className='grey-container'>
+        <div className='vertical-container'>
+          <br/><h1>Welcome!</h1><br/>
+          <TextInput
+            placeholder='Enter acronyms. . .'
+            value={query}
+            onChange={(value) => setQuery(value)} 
+          />
+          <div className='horizontal-container'>
+            <button className='BC-Gov-PrimaryButton' type='button' name='button' onClick={handleSearch}>Search</button>
+            <button className='BC-Gov-SecondaryButton' type='button' name='button' onClick={goToInsertAcronyms}>New Acronym</button>
+          </div>
+        </div>
       </div>
-      <h4>Acronyms:</h4>
-      <KeyValueList
+      <AcronymTable
         textWhenEmpty='Not Found'
         keyValuePairs={response}
       />
@@ -91,26 +136,28 @@ function InsertAcronyms({setScreen, insertRecord}) {
   }
 
   function handleInsert() {
-    if (acronym != '' && definition != '') {
+    if (acronym !== '' && definition !== '') {
       insertRecord(acronym, definition);
     }
     goToSearchAcronyms();
   }
 
   return (
-    <div className='vertical-container'>
-      <h1>New Acronym</h1>
-      <TextInput
-        placeholder='Enter acronym. . .'
-        onChange={(value) => setAcronym(value)} 
-      />
-      <TextInput
-        placeholder='Enter definition. . .'
-        onChange={(value) => setDefinition(value)} 
-      />
-      <div className='horizontal-container'>
-        <button onClick={handleInsert}>New Acronym</button>
-        <button onClick={goToSearchAcronyms}>Cancel</button>
+    <div className='grey-container'>
+      <div className='vertical-container'>
+      <br/><h1>New Acronym</h1><br/>
+        <TextInput
+          placeholder='Enter acronym. . .'
+          onChange={(value) => setAcronym(value)} 
+        />
+        <TextArea
+          placeholder='Enter definition. . .'
+          onChange={(value) => setDefinition(value)} 
+        />
+        <div className='horizontal-container'>
+          <button className='BC-Gov-PrimaryButton' type='button' name='button' onClick={handleInsert}>New Acronym</button>
+          <button className='BC-Gov-SecondaryButton' type='button' name='button' onClick={goToSearchAcronyms}>Cancel</button>
+        </div>
       </div>
     </div>
   )
@@ -118,7 +165,7 @@ function InsertAcronyms({setScreen, insertRecord}) {
 
 function App() {
   const [screen, setScreen] = useState('searchAcronyms');
-  const [records, setRecords] = useState({});
+  const [records, setRecords] = useState({AMS: 'Acronym Management System'});
 
   function searchRecords(acronym) {
     if (acronym === '') {
@@ -154,8 +201,27 @@ function App() {
   }
 
   return (
-    <div className='App'>
-      {renderScreen()}
+    <div className='page'>
+      <header>
+        <div className='banner'>
+          <img className='logo' src={`${process.env.PUBLIC_URL}/images/aw-icon.png`} alt='AW' />
+          <div className='sitename'>
+            <h3>Acronym</h3>
+            <h3>World</h3>
+          </div>
+          <div className='other'>
+            <h2>Acronym Management System</h2>
+          </div>
+        </div>
+      </header>
+      <div className='content'>
+        <div className='App'>
+          {renderScreen()}
+        </div>
+      </div>
+      <footer className='footer'>
+        <div className='container'></div>
+      </footer>
     </div>
   );
 }

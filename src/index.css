@@ -1,28 +1,7 @@
-@font-face {
-  font-family: 'BCSans';
-  font-style: normal;
-  src: url('../public/fonts/BCSans-Regular.woff') format('woff');
-}
-@font-face {
-  font-family: 'BCSans';
-  font-style: italic;
-  src: url('../public/fonts/BCSans-Italic.woff') format('woff');
-}
-@font-face {
-  font-family: 'BCSans';
-  font-weight: 700;
-  src: url('../public/fonts/BCSans-Bold.woff') format('woff');
-}
-@font-face {
-  font-family: 'BCSans';
-  font-style: italic;
-  font-weight: 700;
-  src: url('../public/fonts/BCSans-BoldItalic.woff') format('woff');
-}
-
 body {
   margin: 0;
   font-family: 'BCSans', sans-serif;
+  color: hsla(0,0%,0%,0.8);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -30,4 +9,15 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;   
+}
+
+.content {
+  margin-top: 65px;
+  flex-grow: 1;
 }
