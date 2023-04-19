@@ -1,52 +1,25 @@
 import './SearchAcronymsScreen.css';
+import DatabaseContext from '../../../contexts/DatabaseContext.js';
 import TextInput from '../../common/TextInput/TextInput.js'
 import PrimaryButton from '../../common/PrimaryButton/PrimaryButton.js';
 import SecondaryButton from '../../common/SecondaryButton/SecondaryButton.js';
 import AcronymTable from './AcronymTable/AcronymTable.js'
 import { VerticalContainer, HorizontalContainer, GreyContainer } from '../../common/containers';
-import { useEffect, useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
 
 // Landing screen.
 // User can search for acronyms.
+// User can delete acronyms.
 // User can navigate to the acronym search screen.
-function SearchAcronymsScreen({setScreen, fakeDb, setFakeDb}) {
+function SearchAcronymsScreen({goToInsertAcronyms}) {
+  const {searchRecord} = useContext(DatabaseContext);
   const [query, setQuery] = useState('');
-  const [response, setResponse] = useState({});
-
-  function goToInsertAcronyms() {
-    setScreen('insertAcronyms') 
-  }
-
-  function resetInput() {
-    setQuery('')
-  }
-
-  function searchRecords(acronym, db) {
-    if (acronym === '') {
-      return db
-    } else if (db.hasOwnProperty(acronym)) {
-      return { [acronym]: db[acronym]}
-    } else {
-      return {}
-    }
-  }
+  const [tableData, setTableData] = useState({});
 
   function handleSearch () {
-    setResponse(searchRecords(query, fakeDb))
-    resetInput()
-  };
-
-  function deleteRecord(acronym) {
-    const updated = Object.fromEntries(
-      Object.entries(fakeDb).filter(([key]) => key != acronym)
-    );
-    setFakeDb(updated);
-    return updated;
-  };
-
-  function handleDelete(acronym) {
-    const updated = deleteRecord(acronym);
-    setResponse(searchRecords(query, updated));
+    const searchResult = searchRecord(query.trim());
+    setTableData(searchResult);
+    setQuery('');
   };
 
   // Perform a fresh search whenever user returns to this screen.
@@ -59,14 +32,14 @@ function SearchAcronymsScreen({setScreen, fakeDb, setFakeDb}) {
       <GreyContainer>
         <VerticalContainer>
           <br/><h1>Welcome!</h1><br/>
-          <TextInput placeholder='Enter acronyms. . .' value={query} onChange={(value) => setQuery(value)}/>
+          <TextInput placeholder='Enter acronym. . .' value={query} onChange={(value) => setQuery(value)}/>
           <HorizontalContainer>
             <PrimaryButton text='Search' onClick={handleSearch}/>
             <SecondaryButton text='New Acronym' onClick={goToInsertAcronyms}/>
           </HorizontalContainer>
         </VerticalContainer>
       </GreyContainer>
-      <AcronymTable textWhenEmpty='Not Found' tableData={response} deleter={handleDelete}/>
+      <AcronymTable textWhenEmpty='Not Found' tableData={tableData} setTableData={setTableData}/>
     </VerticalContainer>
   )
 }

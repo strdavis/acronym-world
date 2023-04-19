@@ -1,8 +1,10 @@
 import './App.css';
-import AcronymManagementSystem from './components/AcronymManagementSystem/AcronymManagementSystem.js'
+import './bcFonts.css';
+import './bcGlobalStyles.css';
+import Page from './components/common/Page/Page';
 import Header from './components/common/Header/Header.js'
 import Footer from './components/common/Footer/Footer.js'
-import Page from './components/common/Page/Page';
+import AcronymManagementSystem from './components/AcronymManagementSystem/AcronymManagementSystem.js'
 
 function App() {
   return (
