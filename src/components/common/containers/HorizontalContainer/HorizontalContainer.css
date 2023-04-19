@@ -1,0 +1,9 @@
+.horizontal-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.horizontal-container > *{
+  margin-left: 5px;
+  margin-right: 5px;
+}

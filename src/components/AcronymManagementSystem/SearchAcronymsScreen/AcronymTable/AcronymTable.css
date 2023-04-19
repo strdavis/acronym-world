@@ -1,0 +1,58 @@
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 15px;
+}
+
+th {
+  text-align: left;
+  background-color: #d0d0d1;
+}
+
+table {
+  width: 100%;
+}
+
+td:last-child {
+  border-left: none;
+}
+
+td:nth-last-child(2) {
+  border-right: none;
+}
+
+th:last-child {
+  border-left: none;
+}
+
+th:nth-last-child(2) {
+  border-right: none;
+}
+
+.acronym-column {
+  word-wrap: break-word;
+  word-break: break-all;
+  white-space: normal;
+}
+
+.definition-column {
+  word-wrap: break-word;
+  word-break: break-all;
+  white-space: normal;
+  max-width: 70%;
+}
+
+.delete-button-column {
+  width: 100px;
+}
+
+h2.table-header {
+  font-weight: normal;
+  text-align: left;
+  width: 100%;
+  margin-bottom: 30px;
+  border-bottom: 1px solid #ccc;
+}
